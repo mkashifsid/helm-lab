@@ -1,0 +1,15 @@
+{{- if .Values.frontend.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "guestbook.fullname" . }}-frontend
+  labels:
+    {{- include "guestbook.labels" . | nindent 4 }}
+    app.kubernetes.io/component: frontend
+data:
+  APP_TITLE: {{ .Values.frontend.config.appTitle | quote }}
+  APP_ENV: {{ .Values.frontend.config.appEnv | quote }}
+  LOG_LEVEL: {{ .Values.frontend.config.logLevel | quote }}
+  REDIS_HOST: {{ include "guestbook.fullname" . }}-redis
+  REDIS_PORT: {{ .Values.backend.service.port | quote }}
+{{- end }}

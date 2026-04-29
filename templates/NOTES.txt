@@ -1,0 +1,28 @@
+🎉 Guestbook has been deployed!
+
+{{- if eq .Values.frontend.service.type "NodePort" }}
+
+Access the application:
+  Get a node IP:
+    kubectl get nodes -o wide
+  Then open in browser:
+    http://<NODE_IP>:{{ .Values.frontend.service.nodePort }}
+{{- end }}
+
+{{- if .Values.ingress.enabled }}
+
+Or via Ingress:
+  {{- range .Values.ingress.hosts }}
+  http://{{ .host }}
+  {{- end }}
+{{- end }}
+
+To get the Redis password:
+  kubectl get secret -n {{ .Release.Namespace }} {{ include "guestbook.fullname" . }}-redis \
+    -o jsonpath='{.data.password}' | base64 -d
+
+Status of release:
+  helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+Uninstall:
+  helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}

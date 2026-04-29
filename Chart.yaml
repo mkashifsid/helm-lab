@@ -1,0 +1,13 @@
+apiVersion: v2
+name: guestbook
+description: A two-tier Flask + Redis guestbook for learning Helm
+type: application
+version: 0.1.0          # Chart version (you increment this on changes)
+appVersion: "v5"        # The app version (the image tag essentially)
+keywords:
+  - guestbook
+  - demo
+  - learning
+maintainers:
+  - name: Kashif
+    email: you@example.com
